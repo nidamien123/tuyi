@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>ADEPR Mashenyi - Rusumo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a1929 0%, #1a2b3c 100%);
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 25, 41, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #c9a227;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c9a227, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+        }
+
+        .nav-links a:hover {
+            background: #c9a227;
+            color: #0a1929;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(201, 162, 39, 0.3);
+            border-color: #c9a227;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            color: #c9a227;
+            cursor: pointer;
+        }
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.3rem;
+            border-radius: 30px;
+            border: 1px solid #c9a227;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            min-width: 60px;
+            text-align: center;
+        }
+        .lang-btn.active {
+            background: #c9a227;
+            color: #0a1929;
+            box-shadow: 0 0 15px #c9a227;
+        }
+        .lang-btn:hover {
+            background: #c9a227;
+            color: #0a1929;
+        }
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(10, 25, 41, 0.7), rgba(10, 25, 41, 0.8)), 
+                        url('https://images.unsplash.com/photo-1548624313-0396c75e4b1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, #c9a227);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+            font-style: italic;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn {
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .hero-btn-primary {
+            background: linear-gradient(135deg, #c9a227, #ffd700);
+            color: #0a1929;
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.4);
+        }
+
+        .hero-btn-primary:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 40px rgba(201, 162, 39, 0.6);
+        }
+
+        .hero-btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #c9a227;
+        }
+
+        .hero-btn-secondary:hover {
+            background: #c9a227;
+            color: #0a1929;
+            transform: scale(1.1);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            color: #fff;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #c9a227, #ffd700);
+            border-radius: 2px;
+        }
+
+        .section-title::after {
+            content: '✝️';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: #c9a227;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 30px;
+            padding: 2.5rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #c9a227, #ffd700);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+            border-color: #c9a227;
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 2rem;
+            color: #c9a227;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #e0e0e0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .location-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .map-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            height: 450px;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a2b3c, #2c3e50);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .map-icon {
+            font-size: 5rem;
+            color: #c9a227;
+        }
+
+        .map-text {
+            font-size: 1.5rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .map-details {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
+            padding: 2.5rem;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(201, 162, 39, 0.1);
+            border-radius: 15px;
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #c9a227, #ffd700);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #0a1929;
+        }
+
+        .info-content h4 {
+            color: #c9a227;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-content p {
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        /* Forms */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(201, 162, 39, 0.2);
+            border-radius: 15px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #c9a227;
+            box-shadow: 0 0 30px rgba(201, 162, 39, 0.3);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #888;
+        }
+
+        .form-group select option {
+            background: #0a1929;
+            color: #fff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #c9a227, #ffd700);
+            border: none;
+            border-radius: 15px;
+            color: #0a1929;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.4);
+        }
+        .ai-chat {
+            margin: 2rem auto;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .ai-header {
+            background: linear-gradient(135deg, #c9a227, #ffd700);
+            padding: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-left span {
+            font-size: 1.2rem !important;
+        }
+
+        .header-left h3 {
+            color: #0a1929;
+            font-size: 1rem;
+        }
+
+        .clear-btn {
+            background: rgba(10, 25, 41, 0.2);
+            border: 1px solid #0a1929;
+            color: #0a1929;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .clear-btn:hover {
+            background: #0a1929;
+            color: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .chat-messages {
+            height: 200px;
+            padding: 0.8rem;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            background: #c9a227;
+            color: #0a1929;
+            font-size: 0.8rem;
+        }
+
+        .message.bot .message-content {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid #c9a227;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 0.4rem;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.4rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(201, 162, 39, 0.2);
+            border-radius: 8px 0 0 8px;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: #c9a227;
+        }
+
+        .chat-input button {
+            padding: 0.4rem 0.8rem;
+            background: #c9a227;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            color: #0a1929;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: #ffd700;
+            transform: scale(1.02);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem 2rem 1rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-col h4 {
+            color: #c9a227;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col p {
+            color: #e0e0e0;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 35px;
+            height: 35px;
+            background: rgba(201, 162, 39, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c9a227;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .social-link:hover {
+            background: #c9a227;
+            color: #0a1929;
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .developer {
+            text-align: center;
+            color: #c9a227;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .developer a {
+            color: #ffd700;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .developer a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design - Enhanced for all devices */
+        @media (max-width: 1200px) {
+            .hero-content h1 { font-size: 4rem; }
+            .hero-content p { font-size: 1.8rem; }
+            .main-content { padding: 2rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .navbar { 
+                padding: 0.8rem 1.5rem; 
+            }
+            .logo-text { font-size: 1.8rem; }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: #0a1929;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                transition: left 0.3s ease-in-out;
+                z-index: 999;
+                gap: 1rem;
+            }
+            .nav-links.active { left: 0; }
+            .nav-links a { 
+                width: 80%; 
+                text-align: center; 
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+            .menu-toggle { 
+                display: block; 
+                font-size: 2.2rem;
+            }
+            .lang-switcher {
+                margin: 1.5rem auto 0;
+                width: 80%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .lang-btn {
+                padding: 0.6rem 1rem;
+                min-width: 70px;
+                font-size: 1rem;
+            }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1.4rem; }
+            .hero-btn { padding: 1rem 2rem; font-size: 1.1rem; }
+            .section-title { font-size: 2.5rem; }
+            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .location-container { grid-template-columns: 1fr; gap: 2rem; }
+            .map-container { height: 350px; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 0.7rem 1rem; }
+            .logo-text { font-size: 1.5rem; }
+            .hero { height: 90vh; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.2rem; }
+            .hero-buttons { flex-direction: column; gap: 1rem; }
+            .hero-btn { 
+                width: 100%; 
+                text-align: center; 
+                padding: 0.9rem 1.5rem;
+                font-size: 1rem;
+            }
+            .main-content { padding: 1.5rem; }
+            .section-title { 
+                font-size: 2rem; 
+                margin-bottom: 2.5rem;
+            }
+            .section-title::after { bottom: -30px; }
+            .grid-container { 
+                grid-template-columns: 1fr; 
+                gap: 1.2rem;
+                margin-top: 2rem;
+            }
+            .card { padding: 1.8rem; }
+            .card h3 { font-size: 1.6rem; }
+            .card p { font-size: 1rem; }
+            .card-icon { font-size: 2.8rem; }
+            
+            /* Location section */
+            .location-container { gap: 1.5rem; }
+            .map-container { height: 300px; }
+            .info-card { padding: 1.5rem; }
+            .info-item { 
+                flex-direction: column; 
+                text-align: center;
+                gap: 0.5rem;
+            }
+            .info-icon { 
+                width: 50px; 
+                height: 50px; 
+                font-size: 1.5rem; 
+            }
+            
+            /* Form */
+            .form-container { 
+                padding: 1.5rem; 
+                margin: 1rem;
+            }
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+            
+            /* AI Chat */
+            .ai-chat { 
+                margin: 1.5rem auto; 
+                max-width: 100%;
+            }
+            .ai-header { padding: 0.6rem; }
+            .header-left span { font-size: 1.1rem !important; }
+            .header-left h3 { font-size: 0.95rem; }
+            .clear-btn { 
+                padding: 0.25rem 0.6rem; 
+                font-size: 0.75rem; 
+            }
+            .chat-messages { height: 180px; }
+            .message-content { 
+                max-width: 90%; 
+                font-size: 0.85rem; 
+            }
+            .chat-input input, 
+            .chat-input button { 
+                font-size: 0.85rem; 
+                padding: 0.5rem; 
+            }
+            
+            /* Footer */
+            .footer-grid { 
+                grid-template-columns: 1fr; 
+                gap: 1.8rem;
+                text-align: center;
+            }
+            .footer-col h4 { font-size: 1.2rem; }
+            .footer-col p { font-size: 0.95rem; }
+            .social-links { 
+                justify-content: center; 
+                gap: 0.8rem;
+            }
+            .social-link { 
+                width: 40px; 
+                height: 40px; 
+                font-size: 1.1rem; 
+            }
+            .copyright { 
+                font-size: 0.75rem; 
+                padding-top: 0.8rem;
+            }
+            .developer { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 480px) {
+            .navbar { padding: 0.6rem 0.8rem; }
+            .logo-text { font-size: 1.3rem; }
+            .hero { height: 85vh; }
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content p { font-size: 1rem; }
+            .hero-btn { 
+                padding: 0.8rem 1.2rem; 
+                font-size: 0.95rem; 
+            }
+            .section-title { 
+                font-size: 1.8rem; 
+                margin-bottom: 2rem;
+            }
+            .section-title::before { width: 70px; }
+            .section-title::after { 
+                font-size: 1.2rem; 
+                bottom: -25px; 
+            }
+            .card { padding: 1.5rem; }
+            .card h3 { font-size: 1.4rem; }
+            .card p { font-size: 0.95rem; }
+            .map-container { height: 250px; }
+            .map-icon { font-size: 4rem; }
+            .map-text { font-size: 1.2rem; }
+            .map-details { font-size: 1rem; }
+            .info-card { padding: 1rem; }
+            .info-item { padding: 0.8rem; }
+            .info-content h4 { font-size: 1rem; }
+            .info-content p { font-size: 0.9rem; }
+            .form-container { padding: 1rem; }
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 0.9rem;
+                font-size: 0.9rem;
+            }
+            .submit-btn { 
+                padding: 1rem; 
+                font-size: 1rem; 
+            }
+            .ai-header { 
+                padding: 0.5rem; 
+                flex-wrap: wrap;
+            }
+            .header-left { gap: 0.3rem; }
+            .clear-btn { 
+                padding: 0.2rem 0.5rem; 
+                font-size: 0.7rem; 
+            }
+            .chat-messages { height: 150px; }
+            .message-content { font-size: 0.8rem; }
+            .chat-input input, 
+            .chat-input button { 
+                font-size: 0.8rem; 
+                padding: 0.4rem; 
+            }
+            .lang-btn {
+                padding: 0.4rem 0.6rem;
+                min-width: 50px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Landscape mode for phones */
+        @media (max-width: 900px) and (orientation: landscape) {
+            .hero { height: 120vh; }
+            .nav-links { 
+                padding-top: 1rem; 
+                gap: 0.5rem; 
+            }
+            .nav-links a { 
+                padding: 0.6rem; 
+                width: 60%; 
+            }
+            .lang-switcher { margin-top: 0.5rem; }
+            .grid-container { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 1rem; 
+            }
+            .card { padding: 1.2rem; }
+        }
+
+        /* Touch-friendly improvements for mobile */
+        @media (max-width: 768px) {
+            .nav-links a {
+                -webkit-tap-highlight-color: rgba(201, 162, 39, 0.3);
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .lang-btn {
+                min-height: 44px;
+            }
+            .hero-btn, .submit-btn, .chat-input button, .clear-btn {
+                min-height: 44px;
+            }
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-text" data-i18n="logo">ADEPR MASHENYI</div>
+        <div class="menu-toggle">☰</div>
+        <ul class="nav-links">
+            <li><a onclick="showSection('home')" data-i18n="nav_home">Home</a></li>
+            <li><a onclick="showSection('about')" data-i18n="nav_about">About</a></li>
+            <li><a onclick="showSection('programs')" data-i18n="nav_programs">Programs</a></li>
+            <li><a onclick="showSection('ministries')" data-i18n="nav_ministries">Ministries</a></li>
+            <li><a onclick="showSection('location')" data-i18n="nav_location">Location</a></li>
+            <li><a onclick="showSection('contact')" data-i18n="nav_contact">Contact</a></li>
+            <li class="lang-switcher">
+                <button class="lang-btn active" onclick="switchLanguage('rw')">Kiny</button>
+                <button class="lang-btn" onclick="switchLanguage('en')">Eng</button>
+                <button class="lang-btn" onclick="switchLanguage('fr')">Fr</button>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-content" id="mainContent">
+        <section id="home" style="display: block;">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 data-i18n="hero_title">ADEPR Mashenyi</h1>
+                    <p data-i18n="hero_subtitle">"Urukundo rw'Imana ni rwo rubatsi" - 1 Yohana 4:16</p>
+                    <div class="hero-buttons">
+                        <button class="hero-btn hero-btn-primary" onclick="showSection('about')" data-i18n="hero_btn1">Menya Byinshi</button>
+                        <button class="hero-btn hero-btn-secondary" onclick="showSection('contact')" data-i18n="hero_btn2">Twandikire</button>
+                        <button class="hero-btn hero-btn-secondary" onclick="openAI()" data-i18n="hero_btn3">Baza AI</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" style="display: none;">
+            <h2 class="section-title" data-i18n="about_title">About ADEPR Mashenyi</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-icon">📜</div>
+                    <h3 data-i18n="about_card1_title">Amateka Yacu</h3>
+                    <p data-i18n="about_card1_text">ADEPR Mashenyi yashinzwe mu mwaka wa 2000 hafi ya Rusumo. Itorero ryacu rikorera Imana mu mahoro n'urukundo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3 data-i18n="about_card2_title">Inshingano Zacu</h3>
+                    <p data-i18n="about_card2_text">Gukwirakwiza ubutumwa bwiza bwa Yesu Kristo mu karere ka Rusumo no gufasha abatishoboye.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🙏</div>
+                    <h3 data-i18n="about_card3_title">Ibyo Twizera</h3>
+                    <p data-i18n="about_card3_text">Twizera Imana Data, Yesu Kristo Umwana we, na Mwuka Wera. Dukurikiza inyigisho za Bibiliya.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="programs" style="display: none;">
+            <h2 class="section-title" data-i18n="programs_title">Gahunda z'Icyumweru</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-icon">⏰</div>
+                    <h3 data-i18n="programs_card1_title">Amasengesho yo ku Gitondo</h3>
+                    <p data-i18n="programs_card1_text">Kuwa Mbere - Kuwa Gatanu: 5:00-6:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌙</div>
+                    <h3 data-i18n="programs_card2_title">Amasengesho yo nimugoroba</h3>
+                    <p data-i18n="programs_card2_text">Kuwa Gatandatu: 18:00-20:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🙏</div>
+                    <h3 data-i18n="programs_card3_title">Misa ya Mugaragero</h3>
+                    <p data-i18n="programs_card3_text">Ku Cyumweru 9:00-12:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤝</div>
+                    <h3 data-i18n="programs_card4_title">Gutabara Abatishoboye</h3>
+                    <p data-i18n="programs_card4_text">Ku Wa Gatatu 15:00-17:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌟</div>
+                    <h3 data-i18n="programs_card5_title">Urubyiruko</h3>
+                    <p data-i18n="programs_card5_text">Ku Wa Gatanu 17:00-20:00</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ministries" style="display: none;">
+            <h2 class="section-title" data-i18n="ministries_title">Inshingano z'Itorero</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-icon">🎵</div>
+                    <h3 data-i18n="ministries_card1_title">Kwaya</h3>
+                    <p data-i18n="ministries_card1_text">Ihuriro ry'abacuranzi: Ku Cyumweru 15:00-16:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👩</div>
+                    <h3 data-i18n="ministries_card2_title">Abagore</h3>
+                    <p data-i18n="ministries_card2_text">Gahunda y'abagore: Ku Wa Gatandatu 14:00-16:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👨</div>
+                    <h3 data-i18n="ministries_card3_title">Abagabo</h3>
+                    <p data-i18n="ministries_card3_text">Gusangira n'abagabo: Ku Wa Gatatu 18:00-20:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧒</div>
+                    <h3 data-i18n="ministries_card4_title">Abana</h3>
+                    <p data-i18n="ministries_card4_text">Sunday School: Ku Cyumweru 10:00-11:30</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👴</div>
+                    <h3 data-i18n="ministries_card5_title">Abakekuru n'Abasaza</h3>
+                    <p data-i18n="ministries_card5_text">Gahunda y'abakekuru: Ku Wa Kane 14:00-16:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💒</div>
+                    <h3 data-i18n="ministries_card6_title">Ubukwe n'Imibano</h3>
+                    <p data-i18n="ministries_card6_text">Kujyanama abashakanye: Ku Wa Mbere 17:00-19:00</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="location" style="display: none;">
+            <h2 class="section-title" data-i18n="location_title">Aho duherereye</h2>
+            <div class="location-container">
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <div class="map-icon">📍</div>
+                        <div class="map-text" data-i18n="map_name">ADEPR Mashenyi</div>
+                        <div class="map-details" data-i18n="map_details">Gatumba - Rusumo<br>Gatumba, Rusumo</div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <h4 data-i18n="info_address_title">Address</h4>
+                            <p data-i18n="info_address">Gatumba, Rusumo</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div class="info-content">
+                            <h4 data-i18n="info_phone_title">Telefoni</h4>
+                            <p>+250 788888888<br>+250 788888889</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">✉️</div>
+                        <div class="info-content">
+                            <h4 data-i18n="info_email_title">Email</h4>
+                            <p>adeprmashenyi@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">⏰</div>
+                        <div class="info-content">
+                            <h4 data-i18n="info_hours_title">Amasaha</h4>
+                            <p data-i18n="info_hours">Kuwa Mbere - Kuwa Gatanu: 05:00 - 06:00<br>Ku Cyumweru: 08:00 - 12:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" style="display: none;">
+            <h2 class="section-title" data-i18n="contact_title">Twandikire</h2>
+            <div class="form-container">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" data-i18n-placeholder="contact_name" placeholder="Amazina yawe" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" data-i18n-placeholder="contact_email" placeholder="Email yawe" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" data-i18n-placeholder="contact_phone" placeholder="Telefoni">
+                    </div>
+                    <div class="form-group">
+                        <select required data-i18n-options="contact_reason">
+                            <option value="reason">Impamvu yo kutwandikira</option>
+                            <option value="baptism">Kubatiza</option>
+                            <option value="marriage">Gukwa</option>
+                            <option value="wedding">Ubukwe</option>
+                            <option value="support">Ubushobozi</option>
+                            <option value="problem">Ikibazo</option>
+                            <option value="other">Ikindi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" data-i18n-placeholder="contact_message" placeholder="Ubutumwa bwawe" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" data-i18n="contact_submit">Ohereza ubutumwa</button>
+                </form>
+            </div>
+
+            <!-- AI ifite ibisubizo byinshi byose bijyanye na ADEPR Mashenyi -->
+            <div class="ai-chat" id="aiChat">
+                <div class="ai-header">
+                    <div class="header-left">
+                        <span>🤖</span>
+                        <h3 data-i18n="ai_title">AI - Igisubizo</h3>
+                    </div>
+                    <button class="clear-btn" onclick="clearChat()" data-i18n="ai_clear">Suhuza</button>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        <div class="message-content">Muraho! Ndakusubiza ibibazo byawe byose kuri ADEPR Mashenyi. Andika ikibazo icyo ari cyo cyose (misa, ubukwe, kubatiza, address, gahunda, pastor...)</div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="userInput" data-i18n-placeholder="ai_placeholder" placeholder="Andika ikibazo cyawe hano..." onkeypress="if(event.key==='Enter') sendMessage()">
+                    <button onclick="sendMessage()" data-i18n="ai_send">Ohereza</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer_church_name">ADEPR Mashenyi</h4>
+                <p data-i18n="footer_motto">✝️ "Urukundo rw'Imana ni rwo rubatsi"</p>
+                <p data-i18n="footer_address">📍 Gatumba, Rusumo</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_contact">Contact</h4>
+                <p data-i18n="footer_address2">📍 Gatumba, Rusumo</p>
+                <p>📞 +250 788888888</p>
+                <p>✉️ adeprmashenyi@gmail.com</p>
+                <p data-i18n="footer_hours">⏰ Mon-Fri: 8:00-17:00</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_quicklinks">Quick Links</h4>
+                <p><a onclick="showSection('about')" style="cursor: pointer; color: #e0e0e0;" data-i18n="footer_about">About</a></p>
+                <p><a onclick="showSection('programs')" style="cursor: pointer; color: #e0e0e0;" data-i18n="footer_programs">Programs</a></p>
+                <p><a onclick="showSection('location')" style="cursor: pointer; color: #e0e0e0;" data-i18n="footer_location">Location</a></p>
+                <p><a onclick="showSection('contact')" style="cursor: pointer; color: #e0e0e0;" data-i18n="footer_contact_link">Contact</a></p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_follow">Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link">📘</a>
+                    <a href="#" class="social-link">📷</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">▶️</a>
+                    <a href="#" class="social-link">💬</a>
+                </div>
+                <p style="margin-top: 1rem;">📱 WhatsApp: +250 788888888</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p data-i18n="copyright">© 2025 ADEPR Mashenyi - Rusumo - Uburenganzira bwose bwabitswe</p>
+            <p class="developer">Developed by <a href="#" style="color: #ffd700;">TUYIZERE Damien</a></p>
+            <p style="margin-top: 0.5rem;" data-i18n="copyright_location">Gatumba to Rusumo ✝️</p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            rw: {
+                logo: 'ADEPR MASHENYI',
+                nav_home: 'Home',
+                nav_about: 'About',
+                nav_programs: 'Programs',
+                nav_ministries: 'Ministries',
+                nav_location: 'Location',
+                nav_contact: 'Contact',
+                hero_title: 'ADEPR Mashenyi',
+                hero_subtitle: '"Urukundo rw\'Imana ni rwo rubatsi" - 1 Yohana 4:16',
+                hero_btn1: 'Menya Byinshi',
+                hero_btn2: 'Twandikire',
+                hero_btn3: 'Baza AI',
+                about_title: 'About ADEPR Mashenyi',
+                about_card1_title: 'Amateka Yacu',
+                about_card1_text: 'ADEPR Mashenyi yashinzwe mu mwaka wa 2000 hafi ya Rusumo. Itorero ryacu rikorera Imana mu mahoro n\'urukundo.',
+                about_card2_title: 'Inshingano Zacu',
+                about_card2_text: 'Gukwirakwiza ubutumwa bwiza bwa Yesu Kristo mu karere ka Rusumo no gufasha abatishoboye.',
+                about_card3_title: 'Ibyo Twizera',
+                about_card3_text: 'Twizera Imana Data, Yesu Kristo Umwana we, na Mwuka Wera. Dukurikiza inyigisho za Bibiliya.',
+                programs_title: 'Gahunda z\'Icyumweru',
+                programs_card1_title: 'Amasengesho yo ku Gitondo',
+                programs_card1_text: 'Kuwa Mbere - Kuwa Gatanu: 5:00-6:00',
+                programs_card2_title: 'Amasengesho yo nimugoroba',
+                programs_card2_text: 'Kuwa Gatandatu: 18:00-20:00',
+                programs_card3_title: 'Misa ya Mugaragero',
+                programs_card3_text: 'Ku Cyumweru 9:00-12:00',
+                programs_card4_title: 'Gutabara Abatishoboye',
+                programs_card4_text: 'Ku Wa Gatatu 15:00-17:00',
+                programs_card5_title: 'Urubyiruko',
+                programs_card5_text: 'Ku Wa Gatanu 17:00-20:00',
+                ministries_title: 'Inshingano z\'Itorero',
+                ministries_card1_title: 'Kwaya',
+                ministries_card1_text: 'Ihuriro ry\'abacuranzi: Ku Cyumweru 15:00-16:00',
+                ministries_card2_title: 'Abagore',
+                ministries_card2_text: 'Gahunda y\'abagore: Ku Wa Gatandatu 14:00-16:00',
+                ministries_card3_title: 'Abagabo',
+                ministries_card3_text: 'Gusangira n\'abagabo: Ku Wa Gatatu 18:00-20:00',
+                ministries_card4_title: 'Abana',
+                ministries_card4_text: 'Sunday School: Ku Cyumweru 10:00-11:30',
+                ministries_card5_title: 'Abakekuru n\'Abasaza',
+                ministries_card5_text: 'Gahunda y\'abakekuru: Ku Wa Kane 14:00-16:00',
+                ministries_card6_title: 'Ubukwe n\'Imibano',
+                ministries_card6_text: 'Kujyanama abashakanye: Ku Wa Mbere 17:00-19:00',
+                location_title: 'Aho duherereye',
+                map_name: 'ADEPR Mashenyi',
+                map_details: 'Gatumba - Rusumo<br>Gatumba, Rusumo',
+                info_address_title: 'Address',
+                info_address: 'Gatumba, Rusumo',
+                info_phone_title: 'Telefoni',
+                info_email_title: 'Email',
+                info_hours_title: 'Amasaha',
+                info_hours: 'Kuwa Mbere - Kuwa Gatanu: 05:00 - 06:00<br>Ku Cyumweru: 08:00 - 12:00',
+                contact_title: 'Twandikire',
+                contact_name: 'Amazina yawe',
+                contact_email: 'Email yawe',
+                contact_phone: 'Telefoni',
+                contact_reason: ['Impamvu yo kutwandikira','Kubatiza','Gukwa','Ubukwe','Ubushobozi','Ikibazo','Ikindi'],
+                contact_message: 'Ubutumwa bwawe',
+                contact_submit: 'Ohereza ubutumwa',
+                ai_title: 'AI - Igisubizo',
+                ai_placeholder: 'Andika ikibazo cyawe hano...',
+                ai_send: 'Ohereza',
+                ai_clear: 'Suhuza',
+                footer_church_name: 'ADEPR Mashenyi',
+                footer_motto: '✝️ "Urukundo rw\'Imana ni rwo rubatsi"',
+                footer_address: '📍 Gatumba, Rusumo',
+                footer_contact: 'Contact',
+                footer_address2: '📍 Gatumba, Rusumo',
+                footer_hours: '⏰ Mon-Fri: 8:00-17:00',
+                footer_quicklinks: 'Quick Links',
+                footer_about: 'About',
+                footer_programs: 'Programs',
+                footer_location: 'Location',
+                footer_contact_link: 'Contact',
+                footer_follow: 'Follow Us',
+                copyright: '© 2025 ADEPR Mashenyi - Rusumo - Uburenganzira bwose bwabitswe',
+                copyright_location: 'Gatumba to Rusumo ✝️',
+            },
+            en: {
+                logo: 'ADEPR MASHENYI',
+                nav_home: 'Home',
+                nav_about: 'About',
+                nav_programs: 'Programs',
+                nav_ministries: 'Ministries',
+                nav_location: 'Location',
+                nav_contact: 'Contact',
+                hero_title: 'ADEPR Mashenyi',
+                hero_subtitle: '"The love of God is our foundation" - 1 John 4:16',
+                hero_btn1: 'Learn More',
+                hero_btn2: 'Contact Us',
+                hero_btn3: 'Ask AI',
+                about_title: 'About ADEPR Mashenyi',
+                about_card1_title: 'Our History',
+                about_card1_text: 'ADEPR Mashenyi was founded in 2000 near Rusumo. Our church serves God in peace and love.',
+                about_card2_title: 'Our Mission',
+                about_card2_text: 'To spread the good news of Jesus Christ in the Rusumo area and to help the needy.',
+                about_card3_title: 'Our Beliefs',
+                about_card3_text: 'We believe in God the Father, Jesus Christ His Son, and the Holy Spirit. We follow Biblical teachings.',
+                programs_title: 'Weekly Schedule',
+                programs_card1_title: 'Morning Prayers',
+                programs_card1_text: 'Monday - Friday: 5:00-6:00',
+                programs_card2_title: 'Evening Prayers',
+                programs_card2_text: 'Saturday: 18:00-20:00',
+                programs_card3_title: 'Main Service',
+                programs_card3_text: 'Sunday 9:00-12:00',
+                programs_card4_title: 'Helping the Needy',
+                programs_card4_text: 'Tuesday 15:00-17:00',
+                programs_card5_title: 'Youth',
+                programs_card5_text: 'Friday 17:00-20:00',
+                ministries_title: 'Church Ministries',
+                ministries_card1_title: 'Choir',
+                ministries_card1_text: 'Choir rehearsal: Sunday 15:00-16:00',
+                ministries_card2_title: 'Women',
+                ministries_card2_text: 'Women\'s program: Saturday 14:00-16:00',
+                ministries_card3_title: 'Men',
+                ministries_card3_text: 'Men\'s fellowship: Tuesday 18:00-20:00',
+                ministries_card4_title: 'Children',
+                ministries_card4_text: 'Sunday School: Sunday 10:00-11:30',
+                ministries_card5_title: 'Elders',
+                ministries_card5_text: 'Elders program: Thursday 14:00-16:00',
+                ministries_card6_title: 'Marriage & Counseling',
+                ministries_card6_text: 'Couples counseling: Monday 17:00-19:00',
+                location_title: 'Our Location',
+                map_name: 'ADEPR Mashenyi',
+                map_details: 'Gatumba - Rusumo<br>Gatumba, Rusumo',
+                info_address_title: 'Address',
+                info_address: 'Gatumba, Rusumo',
+                info_phone_title: 'Phone',
+                info_email_title: 'Email',
+                info_hours_title: 'Hours',
+                info_hours: 'Monday - Friday: 05:00 - 06:00<br>Sunday: 08:00 - 12:00',
+                contact_title: 'Contact Us',
+                contact_name: 'Your name',
+                contact_email: 'Your email',
+                contact_phone: 'Phone',
+                contact_reason: ['Reason for contacting','Baptism','Marriage','Wedding','Support','Problem','Other'],
+                contact_message: 'Your message',
+                contact_submit: 'Send message',
+                ai_title: 'AI - Answer',
+                ai_placeholder: 'Type your question here...',
+                ai_send: 'Send',
+                ai_clear: 'Clear',
+                footer_church_name: 'ADEPR Mashenyi',
+                footer_motto: '✝️ "The love of God is our foundation"',
+                footer_address: '📍 Gatumba, Rusumo',
+                footer_contact: 'Contact',
+                footer_address2: '📍 Gatumba, Rusumo',
+                footer_hours: '⏰ Mon-Fri: 8:00-17:00',
+                footer_quicklinks: 'Quick Links',
+                footer_about: 'About',
+                footer_programs: 'Programs',
+                footer_location: 'Location',
+                footer_contact_link: 'Contact',
+                footer_follow: 'Follow Us',
+                copyright: '© 2025 ADEPR Mashenyi - Rusumo - All rights reserved',
+                copyright_location: 'Gatumba to Rusumo ✝️',
+            },
+            fr: {
+                logo: 'ADEPR MASHENYI',
+                nav_home: 'Accueil',
+                nav_about: 'À propos',
+                nav_programs: 'Programmes',
+                nav_ministries: 'Ministères',
+                nav_location: 'Localisation',
+                nav_contact: 'Contact',
+                hero_title: 'ADEPR Mashenyi',
+                hero_subtitle: '"L\'amour de Dieu est notre fondement" - 1 Jean 4:16',
+                hero_btn1: 'En savoir plus',
+                hero_btn2: 'Contactez-nous',
+                hero_btn3: 'Demander à l\'IA',
+                about_title: 'À propos d\'ADEPR Mashenyi',
+                about_card1_title: 'Notre Histoire',
+                about_card1_text: 'ADEPR Mashenyi a été fondée en 2000 près de Rusumo. Notre église sert Dieu dans la paix et l\'amour.',
+                about_card2_title: 'Notre Mission',
+                about_card2_text: 'Répandre la bonne nouvelle de Jésus-Christ dans la région de Rusumo et aider les nécessiteux.',
+                about_card3_title: 'Nos Croyances',
+                about_card3_text: 'Nous croyons en Dieu le Père, en Jésus-Christ son Fils, et au Saint-Esprit. Nous suivons les enseignements bibliques.',
+                programs_title: 'Programme Hebdomadaire',
+                programs_card1_title: 'Prières du Matin',
+                programs_card1_text: 'Lundi - Vendredi: 5:00-6:00',
+                programs_card2_title: 'Prières du Soir',
+                programs_card2_text: 'Samedi: 18:00-20:00',
+                programs_card3_title: 'Service Principal',
+                programs_card3_text: 'Dimanche 9:00-12:00',
+                programs_card4_title: 'Aide aux Nécessiteux',
+                programs_card4_text: 'Mardi 15:00-17:00',
+                programs_card5_title: 'Jeunesse',
+                programs_card5_text: 'Vendredi 17:00-20:00',
+                ministries_title: 'Ministères de l\'Église',
+                ministries_card1_title: 'Chorale',
+                ministries_card1_text: 'Répétition de la chorale: Dimanche 15:00-16:00',
+                ministries_card2_title: 'Femmes',
+                ministries_card2_text: 'Programme des femmes: Samedi 14:00-16:00',
+                ministries_card3_title: 'Hommes',
+                ministries_card3_text: 'Réunion des hommes: Mardi 18:00-20:00',
+                ministries_card4_title: 'Enfants',
+                ministries_card4_text: 'École du Dimanche: Dimanche 10:00-11:30',
+                ministries_card5_title: 'Anciens',
+                ministries_card5_text: 'Programme des anciens: Jeudi 14:00-16:00',
+                ministries_card6_title: 'Mariage & Counseling',
+                ministries_card6_text: 'Counseling de couple: Lundi 17:00-19:00',
+                location_title: 'Notre Localisation',
+                map_name: 'ADEPR Mashenyi',
+                map_details: 'Gatumba - Rusumo<br>Gatumba, Rusumo',
+                info_address_title: 'Adresse',
+                info_address: 'Gatumba, Rusumo',
+                info_phone_title: 'Téléphone',
+                info_email_title: 'Email',
+                info_hours_title: 'Heures',
+                info_hours: 'Lundi - Vendredi: 05:00 - 06:00<br>Dimanche: 08:00 - 12:00',
+                contact_title: 'Contactez-nous',
+                contact_name: 'Votre nom',
+                contact_email: 'Votre email',
+                contact_phone: 'Téléphone',
+                contact_reason: ['Raison du contact','Baptême','Mariage','Noces','Soutien','Problème','Autre'],
+                contact_message: 'Votre message',
+                contact_submit: 'Envoyer le message',
+                ai_title: 'IA - Réponse',
+                ai_placeholder: 'Tapez votre question ici...',
+                ai_send: 'Envoyer',
+                ai_clear: 'Effacer',
+                footer_church_name: 'ADEPR Mashenyi',
+                footer_motto: '✝️ "L\'amour de Dieu est notre fondement"',
+                footer_address: '📍 Gatumba, Rusumo',
+                footer_contact: 'Contact',
+                footer_address2: '📍 Gatumba, Rusumo',
+                footer_hours: '⏰ Lun-Ven: 8:00-17:00',
+                footer_quicklinks: 'Liens rapides',
+                footer_about: 'À propos',
+                footer_programs: 'Programmes',
+                footer_location: 'Localisation',
+                footer_contact_link: 'Contact',
+                footer_follow: 'Suivez-nous',
+                copyright: '© 2025 ADEPR Mashenyi - Rusumo - Tous droits réservés',
+                copyright_location: 'Gatumba to Rusumo ✝️',
+            }
+        };
+
+        let currentLang = 'rw';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.lang-btn[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+            
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+            
+            document.querySelectorAll('select[data-i18n-options]').forEach(select => {
+                const key = select.getAttribute('data-i18n-options');
+                if (translations[lang][key]) {
+                    const options = translations[lang][key];
+                    select.querySelectorAll('option').forEach((opt, index) => {
+                        if (options[index]) opt.innerText = options[index];
+                    });
+                }
+            });
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('section[id]').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+            document.querySelector('.nav-links').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Murakoze kutwandikira! Tuzasubiza vuba.');
+            this.reset();
+        });
+
+        function openAI() {
+            showSection('contact');
+            setTimeout(() => {
+                document.getElementById('aiChat').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // AI ifite ibisubizo byinshi byose bijyanye na ADEPR Mashenyi
+        const aiDatabase = {
+            // Amasengesho
+            'misa': 'Misa: Ku Cyumweru 9:00-12:00. Ni yo misa nkuru y\'icyumweru. Twakira abantu bose! 🙏',
+            'amasengesho': 'Amasengesho: Kuwa Mbere - Kuwa Gatanu 5:00-6:00 mugitondo. Twifuza ko waza kudusengera! ⏰',
+            'nimugoroba': 'Amasengesho yo nimugoroba: Kuwa Gatandatu 18:00-20:00. Ni igihe cyo gushima Imana nyuma y\'icyumweru! 🌙',
+            'gusenga': 'Gusenga: Dufite amasengesho buri mugitondo (5:00-6:00) no ku wa gatandatu nimugoroba (18:00-20:00).',
+            
+            // Ibikorwa by'itorero
+            'ubukwe': 'Ubukwe: 150,000 RWF + amasomo 4 y\'ubukwe. Dukorerwa mu itorero. Twandikire wibyanditse! 💒',
+            'kubatiza': 'Kubatiza: Ku Cyumweru cya mbere buri kwezi, ni Ubuntu. Ababyeyi bazane impapuro z\'irangamuntu. 💧',
+            'imibano': 'Imibano: Dufite gahunda y\'abashakanye buri Kuwa Mbere 17:00-19:00. Twakira abashakanye bose! 💑',
+            'kujyanama': 'Kujyanama: Dufite abajyanama babishoboye. Kuwa Mbere 17:00-19:00 cyangwa wandikire uganire na pastor. 🤝',
+            
+            // Gutanga n'ubushobozi
+            'gutanga': 'Gutanga: Mobile Money: 0788888888 (MTN) / 0788888889 (Airtel). Ibyiza byawe bizabikwe mu ijuru! 💰',
+            'ubushobozi': 'Ubushobozi: Dufite gahunda yo gufasha abatishoboye. Ku Wa Gatatu 15:00-17:00. Twakira abifuza gutanga. 🤲',
+            'amafaranga': 'Amafaranga: Mushobora gutanga konti: Banki ya Kigali: 000123456789 (ADEPR Mashenyi). Murakoze! 💵',
+            'icumi': 'Icumi: Nicirwa buri Cyumweru mugihe cya misa. Imana ibahe imigisha! ✝️',
+            
+            // Aho duherereye
+            'address': 'Address: ADEPR Mashenyi iherereye Gatumba - Rusumo. Hafi y\'urwibutso rwa Rusumo. 📍',
+            'aho': 'Aho duherereye: Gatumba, Rusumo. Mushobora kudusanga hafi y\'ikibuga cy\'indege. 🗺️',
+            'telefoni': 'Telefoni: +250 788888888 (Pastor) / +250 788888889 (Diyakoni). Twakira guhamagara! 📞',
+            'email': 'Email: adeprmashenyi@gmail.com. Tuzasubiza vuba! ✉️',
+            'rusumo': 'Rusumo: Itorero ryacu riri Gatumba, hafi y\'umupaka wa Rusumo. Twakira abaturanyi bose! 🌍',
+            'gatumba': 'Gatumba: Ni ho itorero ryacu riherereye. Muraza mushisho! 🏡',
+            
+            // Gahunda z'icyumweru
+            'gahunda': 'Gahunda y\'icyumweru: \n• Misa: Cyumweru 9:00-12:00\n• Abana: Cyumweru 10:00-11:30\n• Urubyiruko: Kuwa Gatanu 17:00-20:00\n• Abagore: Kuwa Gatandatu 14:00-16:00\n• Abagabo: Kuwa Gatatu 18:00-20:00\n• Kwaya: Cyumweru 15:00-16:00\n• Abakekuru: Kuwa Kane 14:00-16:00',
+            'program': 'Programme: \nSunday: 9:00 Main Service, 10:00 Sunday School\nFriday: 17:00 Youth\nSaturday: 14:00 Women, 18:00 Evening Prayer',
+            'cyumweru': 'Ku Cyumweru: Misa 9:00-12:00, Abana (Sunday School) 10:00-11:30, Kwaya 15:00-16:00. Muraza! ⛪',
+            'mbere': 'Kuwa Mbere: Amasengesho 5:00-6:00, Kujyanama abashakanye 17:00-19:00.',
+            'gatanu': 'Kuwa Gatanu: Amasengesho 5:00-6:00, Urubyiruko 17:00-20:00. Ni igihe cy\'urubyiruko! 🌟',
+            'gatatu': 'Kuwa Gatatu: Amasengesho 5:00-6:00, Abagabo 18:00-20:00, Gutabara abatishoboye 15:00-17:00.',
+            'gatandatu': 'Kuwa Gatandatu: Abagore 14:00-16:00, Amasengesho yo nimugoroba 18:00-20:00.',
+            
+            // Inshingano (Ministries)
+            'urubyiruko': 'Urubyiruko: Kuwa Gatanu 17:00-20:00. Dufite gahunda zitandukanye: imyidagaduro, amasomo, n\'ibindi. Abakiri bato bose baraza! 🎉',
+            'abagore': 'Abagore: Kuwa Gatandatu 14:00-16:00. Gahunda y\'abagore: kudoda, guteka, amasomo ya Bibiliya. Abagore bose baraza! 👩',
+            'abagabo': 'Abagabo: Kuwa Gatatu 18:00-20:00. Gusangira, kuganira, amasomo. Abagabo bose baraza! 👨',
+            'abana': 'Abana (Sunday School): Ku Cyumweru 10:00-11:30. Twigisha abana amasomo ya Bibiliya. Abana bose baraza! 🧒',
+            'kwaya': 'Kwaya: Ku Cyumweru 15:00-16:00. Dukorera Imana mu ndirimbo. Abafite impano zo kuririmba baraza! 🎵',
+            'abakekuru': 'Abakekuru n\'Abasaza: Kuwa Kane 14:00-16:00. Bahabwa icyubahiro gitangaje. Twakira abakekuru bose! 👴',
+            'abasaza': 'Abasaza: Kuwa Kane 14:00-16:00. Ni umunsi wabo wo gusangira no kwishimira Imana.',
+            
+            // Ubuyobozi
+            'pastor': 'Pastor: Pastor MANA ni umuyobozi w\'itorero. Mushobora kumubona buri munsi. Azifuzwa kuvugana nawe! 👨‍🏫',
+            'abayobozi': 'Abayobozi: Pastor MANA, Diyakoni KAMANA, n\'Abahimbi MUTUYIMANA. Ni bo bayobora itorero. 👥',
+            'diyakoni': 'Diyakoni: Diyakoni KAMANA afasha mu bikorwa by\'itorero. Mushobora kumubona buri Cyumweru.',
+            'abahimbi': 'Abahimbi: Abahimbi MUTUYIMANA n\'abandi bafasha mu buyobozi bw\'itorero.',
+            
+            // Amateka n'ibyizerwa
+            'amateka': 'ADEPR Mashenyi yashinzwe mu mwaka wa 2000 hafi ya Rusumo. Ubu ifite abanyamuryango barenga 500. Yakomotse ku itorero rya ADEPR Kigali. 📜',
+            '2000': 'Mu mwaka wa 2000 ni ho ADEPR Mashenyi yashinzwe. Ubu ifite imyaka 25! 🎉',
+            'ibyizerwa': 'Twizera Imana Data, Yesu Kristo Umwana we, na Mwuka Wera. Dukurikiza inyigisho za Bibiliya. 🙏',
+            'bibiliya': 'Bibiliya ni ishingiro ry\'ibyo twizera. Tuyiga buri munsi mu masengesho yacu. 📖',
+            
+            // Ibindi
+            'ibirori': 'Ibirori by\'itorero: \n• Noheli: 25 Ukuboza\n• Pasika: Mata\n• Umwaka mushya: 1 Mutarama\n• Isabukuru y\'itorero: 15 Nzeri',
+            'noheli': 'Noheli: 25 Ukuboza. Dufite misa idasanzwe kuva 9:00-13:00. Muraza twishime Imana! 🎄',
+            'pasika': 'Pasika: Mata. Dukunda kwizihiza hamwe n\'abandi matorero. Muraza! ✝️',
+            'isabukuru': 'Isabukuru y\'itorero: 15 Nzeri. Dukunda kuyizihiza mu rwego rwo gushima Imana.',
+            
+            // Contact na support
+            'help': 'Ndakusubiza ibibazo byawe byose! Andika icyo ushaka kumenya: misa, ubukwe, kubatiza, address, telefoni, gahunda, urubyiruko, abagore, abagabo, kwaya, pastor, amateka, gutanga, rusumo... Nzagerageza gusubiza vuba! 😊',
+            'support': 'Niba ufite ikibazo cyangwa icyo ushaka kumenya, wandikire hano cyangwa uhamagare telefoni: +250 788888888. Tugufasha! 💙',
+            'ikibazo': 'Niba ufite ikibazo, wandikire tubasubize. Dushobora no kuganira nawe mu ibanga niba bikenewe. 🤝',
+            
+            // Location nibisanzwe
+            'map': 'ADEPR Mashenyi iherereye Gatumba - Rusumo. Ushobora kudusanga kuri Google Maps: ADEPR Mashenyi Gatumba.',
+            'google': 'Kuri Google Maps, andika "ADEPR Mashenyi Gatumba" ubone aho duherereye.',
+            'ibyapa': 'Ibyapa by\'itorero: Turabona ibyapa byerekana aho duherereye. Mushobora kubibona ugeze Gatumba.',
+            
+            // Inshuro
+            'inshuro': 'Dukunda gukorana n\'abandi matorero: ADEPR Kigali, ADEPR Huye, n\'ayandi. Turakora hamwe mu birori byinshi. 🤝',
+            'adepr': 'ADEPR ni itsinda ry\'amatorero y\'abapentekosti mu Rwanda. ADEPR Mashenyi ni rimwe muri yo. ⛪',
+            
+            // default help
+            'default': 'Mbabarira, ntabwo numvise neza ikibazo cyawe. Nyamara ndashobora kukubwira ibijyanye na: misa, ubukwe, kubatiza, address, telefoni, gahunda, urubyiruko, abagore, abagabo, kwaya, pastor, amateka, gutanga, rusumo... Andika ikibazo cyawe neza! 😊'
+        };
+
+        function askAI(q) {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML += `<div class="message user"><div class="message-content">${q}</div></div>`;
+            
+            let answer = aiDatabase[q] || aiDatabase['default'];
+            
+            setTimeout(() => {
+                chatMessages.innerHTML += `<div class="message bot"><div class="message-content">${answer}</div></div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 200);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim().toLowerCase();
+            if (!text) return;
+            
+            let found = false;
+            for (let key in aiDatabase) {
+                if (text.includes(key)) {
+                    askAI(key);
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                askAI('default');
+            }
+            
+            input.value = '';
+        }
+
+        function clearChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="message bot">
+                    <div class="message-content">Muraho! Ndakusubiza ibibazo byawe byose kuri ADEPR Mashenyi. Andika ikibazo icyo ari cyo cyose (misa, ubukwe, kubatiza, address, gahunda, pastor...)</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
